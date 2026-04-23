@@ -11,6 +11,7 @@ import {
   Sparkles,
   Volume2,
   VolumeX,
+  Gift,
 } from "lucide-react";
 import * as opentype from "opentype.js";
 import { confetti } from "@tsparticles/confetti";
@@ -136,15 +137,15 @@ const DesktopOnlyGuard = ({ children }: { children: React.ReactNode }) => {
           />
         </div>
         <h2 className="font-serif text-3xl italic text-ink">
-          Expérience sur PC uniquement 🌸
+          Ce site est fonctionnel uniquement sur un ordinateur 🌸
         </h2>
         <p className="font-serif text-xl text-neutral-500 leading-relaxed max-w-sm">
-          Cette surprise a été conçue pour être vécue sur un{" "}
+          Vous pourrez consulter ce site depuis un{" "}
           <span className="text-ink font-semibold">ordinateur</span>.
-          <br />
+          {/* <br />
           <br />
           S'il te plaît, reviens me voir sur ton PC pour profiter de toute la
-          magie. ✨
+          magie. ✨ */}
         </p>
       </div>
     );
@@ -172,7 +173,7 @@ const TheEnd = () => {
           FIN
         </h2>
         <p className="font-serif italic text-neutral-400 text-xl font-light tracking-widest uppercase">
-          Merci d'être là
+          Merci d'avoir tout suivi !
         </p>
       </div>
     </motion.div>
@@ -284,9 +285,6 @@ const Footer = ({ isMuted }: { isMuted: boolean }) => {
 
       {/* Right: Running Cat and Instruction */}
       <div className="flex items-center gap-4 pointer-events-auto mb-2">
-        <span className="font-serif italic text-ink/30 text-lg tracking-widest uppercase">
-          Eh ! Suit moi...
-        </span>
         <div className="w-64 h-64 -mb-8">
           <DotLottieReact
             src="https://lottie.host/2cd948a6-fca8-4aa8-9975-62b084c10b5d/kpwluVJ8Gr.lottie"
@@ -294,6 +292,9 @@ const Footer = ({ isMuted }: { isMuted: boolean }) => {
             autoplay
           />
         </div>
+        <span className="font-serif italic text-ink/30 text-lg tracking-widest uppercase">
+          Eh ! Suit moi...
+        </span>
       </div>
     </div>
   );
@@ -400,18 +401,18 @@ const ConfettiCountdown = () => {
             </div>
 
             <div className="flex flex-col items-center gap-6">
-              <p className="font-serif italic text-2xl text-neutral-500 text-center max-w-md">
+              {/* <p className="font-serif italic text-2xl text-neutral-500 text-center max-w-md">
                 {isActive
                   ? "La surprise éclate en mille couleurs !"
                   : "Le temps s'est arrêté sur ce moment magique."}
-              </p>
+              </p> */}
 
               <button
                 onClick={startCelebration}
                 className="group relative inline-flex items-center justify-center px-10 py-4 font-medium tracking-wide text-ink border-2 border-ink rounded-full hover:bg-ink hover:text-white transition-all duration-300 shadow-lg shadow-ink/10"
               >
-                <Sparkles className="w-5 h-5 mr-3 transition-transform group-hover:rotate-12" />
-                <span>Plus de confetti ✨</span>
+                {/* <Sparkles className="w-5 h-5 mr-3 transition-transform group-hover:rotate-12" /> */}
+                <span>Plus de confetti</span>
               </button>
             </div>
           </motion.div>
@@ -480,12 +481,25 @@ const HeartCatcher = ({ onComplete }: { onComplete: () => void }) => {
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 600, opacity: 1 }}
               exit={{ scale: 2, opacity: 0 }}
-              transition={{ duration: 4, delay: heart.delay, ease: "linear" }}
+              transition={{ duration: 10, delay: heart.delay, ease: "linear" }}
               onMouseDown={() => handlePop(heart.id)}
               className="absolute p-3 text-rose-400 hover:text-ink cursor-pointer pointer-events-auto"
               style={{ left: `${heart.x}%` }}
             >
-              <Sparkles className="w-8 h-8 fill-current" />
+              {/* <Gift className="w-8 h-8 fill-current" /> */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="64"
+                height="64"
+                fill="currentColor"
+                class="bi bi-balloon"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 9.984C10.403 9.506 12 7.48 12 5a4 4 0 0 0-8 0c0 2.48 1.597 4.506 4 4.984M13 5c0 2.837-1.789 5.227-4.52 5.901l.244.487a.25.25 0 1 1-.448.224l-.008-.017c.008.11.02.202.037.29.054.27.161.488.419 1.003.288.578.235 1.15.076 1.629-.157.469-.422.867-.588 1.115l-.004.007a.25.25 0 1 1-.416-.278c.168-.252.4-.6.533-1.003.133-.396.163-.824-.049-1.246l-.013-.028c-.24-.48-.38-.758-.448-1.102a3 3 0 0 1-.052-.45l-.04.08a.25.25 0 1 1-.447-.224l.244-.487C4.789 10.227 3 7.837 3 5a5 5 0 0 1 10 0m-6.938-.495a2 2 0 0 1 1.443-1.443C7.773 2.994 8 2.776 8 2.5s-.226-.504-.498-.459a3 3 0 0 0-2.46 2.461c-.046.272.182.498.458.498s.494-.227.562-.495"
+                />
+              </svg>
             </motion.button>
           ))}
         </AnimatePresence>
@@ -497,10 +511,10 @@ const HeartCatcher = ({ onComplete }: { onComplete: () => void }) => {
         className="z-10 text-center space-y-6"
       >
         <h3 className="font-serif text-3xl italic text-ink">
-          Attrape les éclats de magie ! ✨
+          Eclate les ballons ! ✨
         </h3>
         <p className="text-neutral-500 font-serif italic text-lg">
-          Clique sur {targetScore} étincelles pour libérer tes voeux.
+          Clique sur {targetScore} ballons pour libérer tes voeux.
         </p>
 
         <div className="w-64 h-2 bg-beige-dore/30 rounded-full mx-auto overflow-hidden">
@@ -571,7 +585,7 @@ const BirthdayReveal = ({
             className="space-y-6"
           >
             <HandwritingCanvas
-              text="Joyeux Anniversaire Claire !"
+              text="Joyeux Anniversaire Esther !"
               played={played}
             />
             <motion.p
@@ -606,8 +620,12 @@ const FinalWishes = ({ played }: { played: boolean }) => {
           className="font-serif italic text-2xl text-neutral-600 leading-relaxed"
         >
           Que chaque jour de cette nouvelle année t'apporte autant de joie que
-          tu en donnes autour de toi. Tu es une personne exceptionnelle, et tu
-          mérites tout le bonheur du monde.
+          tu en donnes autour de toi.
+          <br /> Je suis persuadé que tu es une personne exceptionnelle, et tu
+          mérites tout le bonheur du monde. <br /> Je ne suis sûrement pas la
+          personne idéal pour te le dire mais sache que je te souhaite le
+          meilleur, et que par la grâce de Dieu tu surmonte tes épreuves et que
+          tu trouve la paix et la sérénité que tu mérites.
         </motion.p>
       </div>
 
@@ -714,12 +732,12 @@ export default function App() {
     { id: 1, text: "Hello !", type: "handwriting" },
     {
       id: 2,
-      text: "Ta journée se passe bien j'espère...",
+      text: "Ta journée s'est bien déroulée j'espère...",
       type: "handwriting",
     },
     {
       id: 3,
-      text: "Pour commencer je m'excuse pour le retard...",
+      text: "Excuse, pour ce gros retard...",
       type: "handwriting",
     },
     { id: 4, type: "confetti" },
@@ -830,3 +848,4 @@ export default function App() {
     </DesktopOnlyGuard>
   );
 }
+// Personne
