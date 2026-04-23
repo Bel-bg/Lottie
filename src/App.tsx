@@ -17,6 +17,8 @@ import * as opentype from "opentype.js";
 import { confetti } from "@tsparticles/confetti";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
+const musicUrl = new URL("../music.mp3", import.meta.url).href;
+
 // --- Handwriting Logic ---
 // We implement a "Handwriting.Hand.draw" polyfill to match the user's specific request
 // ensuring "each letter is traced individually".
@@ -707,6 +709,9 @@ const WelcomeModal = ({ onStart }: WelcomeModalProps) => {
           </span>{" "}
           et <span className="font-semibold text-ink">→</span> de ton clavier
           pour naviguer.
+          <br />
+          Appuie sur <span className="font-semibold text-ink">C'est parti</span>{" "}
+          pour lancer la surprise avec le son.
         </p>
         <button
           onClick={onStart}
@@ -726,7 +731,20 @@ export default function App() {
   const [showModal, setShowModal] = useState(true);
   const [playedSections, setPlayedSections] = useState<number[]>([]);
   const [isMuted, setIsMuted] = useState(true); // Start muted due to browser autoplay policies
+  const [audioError, setAudioError] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const tryPlayAudio = useCallback(async () => {
+    if (!audioRef.current) return;
+    try {
+      await audioRef.current.play();
+      setAudioError(false);
+    } catch (err) {
+      console.warn("Audio playback bloqué :", err);
+      setAudioError(true);
+      setIsMuted(true);
+    }
+  }, []);
 
   const sections = [
     { id: 1, text: "Hello !", type: "handwriting" },
@@ -754,12 +772,9 @@ export default function App() {
     if (isMuted) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play().catch((err) => {
-        console.warn("Audio playback failed:", err);
-        setIsMuted(true);
-      });
+      tryPlayAudio();
     }
-  }, [isMuted]);
+  }, [isMuted, tryPlayAudio]);
 
   // Handle start from modal
   const handleStart = () => {
@@ -794,7 +809,7 @@ export default function App() {
   return (
     <DesktopOnlyGuard>
       <main className="grainy-bg h-screen w-screen flex flex-col items-center justify-center bg-blanc-casse select-none overflow-hidden">
-        <audio ref={audioRef} src="/music.mp3" loop preload="auto" />
+        <audio ref={audioRef} src={musicUrl} loop preload="auto" />
 
         <TopBar isMuted={isMuted} toggleMute={() => setIsMuted(!isMuted)} />
 
@@ -836,6 +851,23 @@ export default function App() {
         </div>
 
         <Footer isMuted={isMuted} />
+
+        {audioError && (
+          <div className="fixed left-1/2 bottom-28 z-[80] w-[min(90vw,420px)] -translate-x-1/2 rounded-3xl border border-ink/10 bg-blanc-casse/95 p-4 text-center shadow-xl shadow-ink/10">
+            <p className="font-serif text-sm text-ink/80 mb-3">
+              Le navigateur a bloqué le son. Clique sur le bouton pour l'activer.
+            </p>
+            <button
+              onClick={() => {
+                setIsMuted(false);
+                tryPlayAudio();
+              }}
+              className="inline-flex items-center justify-center rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-ink/20 hover:bg-ink/90 transition"
+            >
+              Activer le son
+            </button>
+          </div>
+        )}
 
         {/* Decorative Ornaments */}
         <div className="fixed top-12 left-12 pointer-events-none opacity-10">
