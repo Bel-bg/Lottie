@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Inter", sans-serif;
+  
+  --color-rose-poudre: #f9e4ec;
+  --color-blanc-casse: #fdf6f0;
+  --color-beige-dore: #e8d5b7;
+  --color-mauve-clair: #c9b8d8;
+  --color-ink: #c2748a;
+}
+
+@layer base {
+  html, body {
+    @apply h-full w-full overflow-hidden;
+  }
+  body {
+    @apply font-serif antialiased text-ink bg-blanc-casse;
+  }
+}
+
+/* Texture grainée */
+.grainy-bg {
+  position: relative;
+}
+
+.grainy-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 99;
+}
+
+.grainy-bg::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 100;
+}
